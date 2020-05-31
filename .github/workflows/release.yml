@@ -1,22 +1,17 @@
-name: Maven Release
+name: Release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - staging
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Prepare for release
-        run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            clean release:prepare
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
       - name: Set up Java for publishing a release to Maven Central Repository
         uses: actions/setup-java@v1
         with:
@@ -24,30 +19,38 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-      - name: Install GPG secret key
-        run: |
-          cat <(echo -e "${{ secrets.GPG_PUBLIC_KEY }}") | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
-      - name: Publish to the Maven Central Repository
-        run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            release:perform
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-      - name: Set up Java for publishing to GitHub Packages
-        uses: actions/setup-java@v1
+
+      - name: Configuring Maven cache
+        uses: actions/cache@v1
         with:
-          java-version: 1.8
-      - name: Publish to GitHub Packages
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Configure GPG Key
         run: |
-          mvn -B -Pgithub \
-            --no-transfer-progress \
-            --batch-mode \
-            release:perform
+          mkdir -p ~/.gnupg/
+          print "${GPG_PRIVATE_KEY}" | base64 --decode > ~/.gnupg/private.key
+          gpg --import ~/.gnupg/private.key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Prepare for release
+        run: |
+          git config user.email "malkomich@gmail.com"
+          git config user.name "Juan Carlos Gonzalez"
+          mvn -B -ntp clean release:prepare
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to the Maven Central Repository
+        run: |
+          mvn -B -ntp -Possrh \
+            -Dmaven.gpg.plugin.skip=false \
+            -Dgpg.passphrase=$GPG_PASSPHRASE \
+            release:perform
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

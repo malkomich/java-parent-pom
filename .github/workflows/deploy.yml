@@ -1,4 +1,4 @@
-name: Maven Deploy
+name: Deploy snapshot
 
 on:
   push:
@@ -6,10 +6,12 @@ on:
       - master
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Source code
+        uses: actions/checkout@v2
+
       - name: Set up Java for publishing snapshot to Maven Central Repository
         uses: actions/setup-java@v1
         with:
@@ -17,18 +19,17 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-      - name: Install GPG secret key
-        run: |
-          cat <(echo -e "${{ secrets.GPG_PUBLIC_KEY }}") | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
-      - name: Publish to the Maven Central Repository
-        run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            clean deploy
+
+      - name: Configuring Maven cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Deploy to the Maven Central Repository
+        run: mvn -B -ntp -Possrh clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
