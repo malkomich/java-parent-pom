@@ -1,3 +1,7 @@
+![Maven Verify](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Verify/badge.svg?branch=master)
+![Maven Deploy](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Deploy/badge.svg?branch=master)
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.github.malkomich/java-parent-pom?label=RELEASE&nexusVersion=2&server=https%3A%2F%2Foss.sonatype.org&style=plastic&color=informational&logo=java&logoColor=critical)
+
 # Java Parent POM
 
 POM parent, which define a set of plugin configuration for the build lifecycle of a Java project.
