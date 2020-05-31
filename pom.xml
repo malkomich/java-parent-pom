@@ -35,6 +35,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <resources.directory>src/main/resources</resources.directory>
+        <package.repository>github</package.repository>
 
         <!-- Checkstyle config -->
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -87,18 +88,6 @@
         <nexus.staging.plugin.version>1.6.8</nexus.staging.plugin.version>
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
     </properties>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
-            </url>
-        </repository>
-    </distributionManagement>
 
     <scm>
         <connection>scm:git:git://github.com/malkomich/java-parent-pom.git</connection>
@@ -430,4 +419,34 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>ossrh</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+                    </url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Malkomich Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/malkomich/java-parent-pom</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
