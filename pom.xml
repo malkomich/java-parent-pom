@@ -365,6 +365,10 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <configuration>
                     <skip>${maven.gpg.plugin.skip}</skip>
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
                 </configuration>
                 <executions>
                     <execution>
@@ -431,8 +435,7 @@
                 </snapshotRepository>
                 <repository>
                     <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
-                    </url>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
         </profile>
