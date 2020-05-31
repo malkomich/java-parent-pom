@@ -210,11 +210,19 @@ This property references the password for the key pair signed by the plugin `mav
 It is highly recommended using an environment variable, or storing it in a configuration file outside the project.
 
 The steps to execute a release with this plugins are:
-1. `mvn release:prepare`: Prepare for a release in SCM. Steps through several phases to ensure
-the POM is ready to be released and then prepares SCM to eventually contain a tagged version of the
-release and a record in the local copy of the parameters used
-2. `mvn release:perform`: Perform a release from SCM, either from a specified tag,
-or the tag representing the previous release in the working copy created
+1. `mvn release:prepare`:
+    - Check that there are no uncommitted changes in the sources
+    - Check that there are no SNAPSHOT dependencies
+    - Change the version in the POMs from x-SNAPSHOT to a new version (you will be prompted for the versions to use)
+    - Transform the SCM information in the POM to include the final destination of the tag
+    - Run the project tests against the modified POMs to confirm everything is in working order
+    - Commit the modified POMs
+    - Tag the code in the SCM with a version name (this will be prompted for)
+    - Bump the version in the POMs to a new value y-SNAPSHOT (these values will also be prompted for)
+    - Commit the modified POMs
+2. `mvn release:perform`:
+    - Checkout from an SCM URL with optional tag
+    - Run the predefined Maven goals to release the project (by default, deploy site-deploy)
 
 
 ## [Maven Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
