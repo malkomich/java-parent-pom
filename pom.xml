@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -35,14 +35,17 @@
         <resources.directory>src/main/resources</resources.directory>
         <package.repository>github</package.repository>
 
-        <!-- Checkstyle config -->
+        <!-- Release plugin config -->
+        <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
+
+        <!-- Checkstyle plugin config -->
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
         <checkstyle.fail.violations>true</checkstyle.fail.violations>
         <checkstyle.log.violations>true</checkstyle.log.violations>
         <checkstyle.max.violations>0</checkstyle.max.violations>
         <checkstyle.violation.severity>error</checkstyle.violation.severity>
 
-        <!-- Surefire & JaCoCo config -->
+        <!-- Surefire & JaCoCo plugins config -->
         <maven.surefire.plugin.failIfNoTests>false</maven.surefire.plugin.failIfNoTests>
 
         <jacoco.plugin.bundle.instruction.coveredratio>0%</jacoco.plugin.bundle.instruction.coveredratio>
@@ -69,7 +72,7 @@
         <jacoco.maven.plugin.skip>false</jacoco.maven.plugin.skip>
         <maven.gpg.plugin.skip>true</maven.gpg.plugin.skip>
         <maven.deploy.plugin.skip>false</maven.deploy.plugin.skip>
-        <nexus.staging.plugin.deploy.phase>deploy</nexus.staging.plugin.deploy.phase>
+        <nexus.staging.plugin.deploy.phase>none</nexus.staging.plugin.deploy.phase>
 
         <!-- Plugins versions -->
         <maven.clean.plugin.version>3.1.0</maven.clean.plugin.version>
@@ -91,7 +94,7 @@
         <connection>scm:git:git://github.com/malkomich/java-parent-pom.git</connection>
         <developerConnection>scm:git:git@github.com:malkomich/java-parent-pom.git</developerConnection>
         <url>https://github.com/malkomich/java-parent-pom</url>
-        <tag>HEAD</tag>
+        <tag>staging</tag>
     </scm>
 
     <build>
@@ -365,7 +368,10 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <configuration>
                     <skip>${maven.gpg.plugin.skip}</skip>
+                    <executable>gpg2</executable>
+                    <useAgent>true</useAgent>
                     <gpgArguments>
+                        <arg>--batch</arg>
                         <arg>--pinentry-mode</arg>
                         <arg>loopback</arg>
                     </gpgArguments>
@@ -416,7 +422,8 @@
                     <localCheckout>true</localCheckout>
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
-                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                    <tagNameFormat>${maven.release.plugin.tagNameFormat}</tagNameFormat>
+                    <branchName>staging</branchName>
                 </configuration>
             </plugin>
         </plugins>
@@ -425,9 +432,10 @@
     <profiles>
         <profile>
             <id>ossrh</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <properties>
+                <nexus.staging.plugin.deploy.phase>deploy</nexus.staging.plugin.deploy.phase>
+                <maven.gpg.plugin.skip>false</maven.gpg.plugin.skip>
+            </properties>
             <distributionManagement>
                 <snapshotRepository>
                     <id>ossrh</id>

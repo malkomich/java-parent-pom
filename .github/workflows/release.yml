@@ -1,22 +1,15 @@
-name: Maven Release
+name: Release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - staging
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Prepare for release
-        run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
-            clean release:prepare
       - name: Set up Java for publishing a release to Maven Central Repository
         uses: actions/setup-java@v1
         with:
@@ -26,28 +19,20 @@ jobs:
           server-password: MAVEN_PASSWORD
       - name: Install GPG secret key
         run: |
-          cat <(echo -e "${{ secrets.GPG_PUBLIC_KEY }}") | gpg --batch --import
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
+      - name: Prepare for release
+        run: |
+          git config user.email "malkomich@gmail.com"
+          git config user.name "Juan Carlos Gonzalez"
+          mvn -B -ntp clean release:prepare
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to the Maven Central Repository
         run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
+          mvn -B -ntp -Possrh \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
             release:perform
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-      - name: Set up Java for publishing to GitHub Packages
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Publish to GitHub Packages
-        run: |
-          mvn -B -Pgithub \
-            --no-transfer-progress \
-            --batch-mode \
-            release:perform
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

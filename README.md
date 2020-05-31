@@ -1,13 +1,25 @@
-![Maven Verify](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Verify/badge.svg?branch=master)
-![Maven Deploy](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Deploy/badge.svg?branch=master)
+[![Maven Verify](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Verify/badge.svg?branch=master)](https://github.com/malkomich/java-parent-pom/actions?query=workflow%3A%22Maven+Verify%22)
+[![Maven Deploy](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Deploy/badge.svg?branch=master)](https://github.com/malkomich/java-parent-pom/actions?query=workflow%3A%22Maven+Deploy%22)
 ![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.github.malkomich/java-parent-pom?label=RELEASE&nexusVersion=2&server=https%3A%2F%2Foss.sonatype.org&style=plastic&color=informational&logo=java&logoColor=critical)
 
 # Java Parent POM
 
 POM parent, which define a set of plugin configuration for the build lifecycle of a Java project.
 
-> All plugins but the `maven-gpg-plugin` are ENABLED BY DEFAULT, to disable them you must follow the
->[Plugin disabling instructions](#plugin-disabling-instructions) 
+> All plugins but `maven-gpg-plugin` and `nexus-staging-plugin`, are ENABLED BY DEFAULT. 
+>
+>To disable them you must follow the [Plugin disabling instructions](#plugin-disabling-instructions) 
+
+
+## Usage
+Include this parent in your Maven `pom.xml` file:
+```xml
+<parent>
+    <groupId>com.github.malkomich</groupId>
+    <artifactId>java-parent-pom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</parent>
+```
 
 
 ## Plugin disabling instructions
@@ -205,12 +217,9 @@ and the distribution management configuration:
 Plugin to release the project artifacts.
 ```xml
 <properties>
-    <gpg.passphrase></gpg.passphrase>
+    <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
 </properties>
 ```
-This property references the password for the key pair signed by the plugin `maven-gpg-plugin`. 
-
-It is highly recommended using an environment variable, or storing it in a configuration file outside the project.
 
 The steps to execute a release with this plugins are:
 1. `mvn release:prepare`:

@@ -1,4 +1,4 @@
-name: Maven Deploy
+name: Deploy snapshot
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,14 +19,11 @@ jobs:
           server-password: MAVEN_PASSWORD
       - name: Install GPG secret key
         run: |
-          cat <(echo -e "${{ secrets.GPG_PUBLIC_KEY }}") | gpg --batch --import
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
       - name: Publish to the Maven Central Repository
         run: |
-          mvn -B \
-            --no-transfer-progress \
-            --batch-mode \
-            -Dmaven.gpg.plugin.skip=false \
+          mvn -B -ntp -Possrh \
             -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
             clean deploy
         env:
