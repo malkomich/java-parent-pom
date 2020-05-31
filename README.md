@@ -218,6 +218,7 @@ Plugin to release the project artifacts.
 ```xml
 <properties>
     <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
+    <maven.release.plugin.releaseProfiles>ossrh</maven.release.plugin.releaseProfiles>
 </properties>
 ```
 
