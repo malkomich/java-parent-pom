@@ -30,9 +30,8 @@ jobs:
 
       - name: Configure GPG Key
         run: |
-          mkdir -p ~/.gnupg/
-          print "${GPG_PRIVATE_KEY}" | base64 --decode > ~/.gnupg/private.key
-          gpg --import ~/.gnupg/private.key
+          printf "${GPG_PRIVATE_KEY}" | base64 --decode | gpg --batch --import
+          gpg --list-keys
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
@@ -46,9 +45,8 @@ jobs:
 
       - name: Publish to the Maven Central Repository
         run: |
-          mvn -B -ntp -Possrh \
-            -Dmaven.gpg.plugin.skip=false \
-            -Dgpg.passphrase=$GPG_PASSPHRASE \
+          mvn -ntp \
+            -Darguments="-B -Dgpg.passphrase=$GPG_PASSPHRASE -Dmaven.gpg.plugin.skip=false" \
             release:perform
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

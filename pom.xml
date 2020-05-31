@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -37,6 +37,7 @@
 
         <!-- Release plugin config -->
         <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
+        <maven.release.plugin.releaseProfiles>ossrh</maven.release.plugin.releaseProfiles>
 
         <!-- Checkstyle plugin config -->
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -368,7 +369,7 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <configuration>
                     <skip>${maven.gpg.plugin.skip}</skip>
-                    <executable>gpg</executable>
+                    <executable>gpg2</executable>
                     <useAgent>true</useAgent>
                     <gpgArguments>
                         <arg>--pinentry-mode</arg>
@@ -422,7 +423,7 @@
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <tagNameFormat>${maven.release.plugin.tagNameFormat}</tagNameFormat>
-                    <branchName>staging</branchName>
+                    <releaseProfiles>${maven.release.plugin.releaseProfiles}</releaseProfiles>
                 </configuration>
             </plugin>
         </plugins>
