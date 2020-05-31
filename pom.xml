@@ -69,7 +69,7 @@
         <maven.javadoc.plugin.skip>false</maven.javadoc.plugin.skip>
         <maven.checkstyle.plugin.skip>false</maven.checkstyle.plugin.skip>
         <jacoco.maven.plugin.skip>false</jacoco.maven.plugin.skip>
-        <maven.gpg.plugin.skip>false</maven.gpg.plugin.skip>
+        <maven.gpg.plugin.skip>true</maven.gpg.plugin.skip>
         <maven.deploy.plugin.skip>false</maven.deploy.plugin.skip>
         <nexus.staging.plugin.deploy.phase>deploy</nexus.staging.plugin.deploy.phase>
 

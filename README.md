@@ -2,7 +2,7 @@
 
 POM parent, which define a set of plugin configuration for the build lifecycle of a Java project.
 
-> All the plugins are ENABLED BY DEFAULT, to disable them you must follow the
+> All plugins but the `maven-gpg-plugin` are ENABLED BY DEFAULT, to disable them you must follow the
 >[Plugin disabling instructions](#plugin-disabling-instructions) 
 
 
@@ -10,25 +10,24 @@ POM parent, which define a set of plugin configuration for the build lifecycle o
 You can override the following properties in your `pom.xml` to disable the plugins you need.
 
 Just set the skip property to **true** for the plugin you want to activate.
+
+There are some plugins without the `skip` property, so you can disable them by defining the execution stage as `none`.
+
+Default values:
 ```xml
 <properties>
-    <maven.clean.plugin.skip>true</maven.clean.plugin.skip>
-    <maven.resources.plugin.skip>true</maven.resources.plugin.skip>
-    <maven.compiler.plugin.skip>true</maven.compiler.plugin.skip>
-    <maven.surefire.plugin.skip>true</maven.surefire.plugin.skip>
-    <maven.jar.plugin.skip>true</maven.jar.plugin.skip>
-    <maven.javadoc.plugin.skip>true</maven.javadoc.plugin.skip>
-    <maven.checkstyle.plugin.skip>true</maven.checkstyle.plugin.skip>
-    <jacoco.maven.plugin.skip>true</jacoco.maven.plugin.skip>
+    <maven.clean.plugin.skip>false</maven.clean.plugin.skip>
+    <maven.resources.plugin.skip>false</maven.resources.plugin.skip>
+    <maven.compiler.plugin.skip>false</maven.compiler.plugin.skip>
+    <maven.surefire.plugin.skip>false</maven.surefire.plugin.skip>
+    <maven.jar.plugin.skip>false</maven.jar.plugin.skip>
+    <maven.source.plugin.jar.phase>package</maven.source.plugin.jar.phase>
+    <maven.javadoc.plugin.skip>false</maven.javadoc.plugin.skip>
+    <maven.checkstyle.plugin.skip>false</maven.checkstyle.plugin.skip>
+    <jacoco.maven.plugin.skip>false</jacoco.maven.plugin.skip>
     <maven.gpg.plugin.skip>true</maven.gpg.plugin.skip>
-    <maven.deploy.plugin.skip>true</maven.deploy.plugin.skip>
-</properties>
-```
-There are some plugins without the `skip` property, so you can disable them by defining the execution stage as `none`:
-```xml
-<properties>
-    <maven.source.plugin.jar.phase>none</maven.source.plugin.jar.phase>
-    <nexus.staging.plugin.deploy.phase>none</nexus.staging.plugin.deploy.phase>
+    <maven.deploy.plugin.skip>false</maven.deploy.plugin.skip>
+    <nexus.staging.plugin.deploy.phase>deploy</nexus.staging.plugin.deploy.phase>
 </properties>
 ```
 You can also disable some plugins, and enable them just for specific profiles, for example:
