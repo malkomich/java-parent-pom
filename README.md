@@ -33,6 +33,7 @@ Default values:
 ```xml
 <properties>
     <maven.clean.plugin.skip>false</maven.clean.plugin.skip>
+    <maven.scm.plugin.phase>validate</maven.scm.plugin.phase>
     <maven.resources.plugin.skip>false</maven.resources.plugin.skip>
     <maven.compiler.plugin.skip>false</maven.compiler.plugin.skip>
     <maven.surefire.plugin.skip>false</maven.surefire.plugin.skip>
@@ -43,7 +44,7 @@ Default values:
     <jacoco.maven.plugin.skip>false</jacoco.maven.plugin.skip>
     <maven.gpg.plugin.skip>true</maven.gpg.plugin.skip>
     <maven.deploy.plugin.skip>false</maven.deploy.plugin.skip>
-    <nexus.staging.plugin.deploy.phase>deploy</nexus.staging.plugin.deploy.phase>
+    <nexus.staging.plugin.deploy.phase>none</nexus.staging.plugin.deploy.phase>
 </properties>
 ```
 You can also disable some plugins, and enable them just for specific profiles, for example:
@@ -83,6 +84,10 @@ You just have to override the following properties and set your custom values.
 - [maven-clean-plugin](https://maven.apache.org/plugins/maven-clean-plugin/)
 
 Plugin to clean build files.
+
+- [maven-scm-plugin](https://maven.apache.org/scm/maven-scm-plugin/)
+
+Plugin to validate SCM configuration.
 
 - [maven-compiler-plugin](https://maven.apache.org/plugins/maven-compiler-plugin/)
 
@@ -238,6 +243,11 @@ The steps to execute a release with this plugins are:
     - Checkout from an SCM URL with optional tag
     - Run the predefined Maven goals to release the project (by default, deploy site-deploy)
 
+- [versions-maven-plugin](https://www.mojohaus.org/versions-maven-plugin/)
+
+Plugin to manage your pom.xml versions, including the current artifact versions,
+parent or dependencies/plugins versions, and even the tag for the SCM configuration.
+
 
 ## [Maven Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
 
@@ -248,6 +258,10 @@ Some goals are executed **only for specific profiles**, which are defined betwee
 > mvn clean
 - [maven-clean-plugin](https://maven.apache.org/plugins/maven-clean-plugin/)
     - `clean:clean` (default-clean)
+
+> mvn validate
+- [maven-scm-plugin](https://maven.apache.org/scm/maven-scm-plugin/)
+    - `scm:validate` (validate-scm)
 
 > mvn process-resources
 - [maven-resources-plugin](http://maven.apache.org/plugins/maven-resources-plugin/)
