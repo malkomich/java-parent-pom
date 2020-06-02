@@ -29,20 +29,20 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Configure GPG Key
-        run: |
-          printf "${GPG_PRIVATE_KEY}" | base64 --decode | gpg --batch --import
-          gpg --list-keys
+        run: printf "${GPG_PRIVATE_KEY}" | base64 --decode | gpg --batch --import
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
       - name: Configure Git
         run: |
-          git config --global author.email "3848202+${GITHUB_ACTOR}@users.noreply.github.com"
-          git config --global author.name "${GITHUB_ACTOR}"
+          git config committer.email "noreply@github.com"
+          git config committer.name "Github"
+          git config author.email "noreply@github.com"
+          git config author.name "Github"
 
       - name: Update SCM tag reference
         run: |
-          mvn versions:set-scm-tag -DnewTag=staging
+          mvn versions:set-scm-tag -DnewTag=${GITHUB_REF}
           mvn versions:commit
 
       - name: Prepare for release
@@ -50,11 +50,7 @@ jobs:
           mvn -B -ntp \
             -Dusername=$GITHUB_ACTOR \
             -Dpassword=$GITHUB_TOKEN \
-            clean \
-            release:clean \
             release:prepare
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to the Maven Central Repository
         run: |
