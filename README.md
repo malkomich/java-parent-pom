@@ -219,6 +219,7 @@ Plugin to release the project artifacts.
 <properties>
     <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
     <maven.release.plugin.releaseProfiles>ossrh</maven.release.plugin.releaseProfiles>
+    <maven.release.plugin.pushChanges>true</maven.release.plugin.pushChanges>
 </properties>
 ```
 
