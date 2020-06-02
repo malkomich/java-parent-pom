@@ -35,11 +35,21 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
+      - name: Configure Git
+        run: |
+          git config --global committer.email "noreply@github.com"
+          git config --global committer.name "GitHub"
+          git config --global author.email "3848202+${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global author.name "${GITHUB_ACTOR}"
+
       - name: Prepare for release
         run: |
-          git config user.email "malkomich@gmail.com"
-          git config user.name "Juan Carlos Gonzalez"
-          mvn -B -ntp clean release:prepare
+          mvn -B -ntp \
+            -Dusername=$GITHUB_ACTOR \
+            -Dpassword=$GITHUB_TOKEN \
+            clean \
+            release:clean \
+            release:prepare
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
