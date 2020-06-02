@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -38,6 +38,7 @@
         <!-- Release plugin config -->
         <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
         <maven.release.plugin.releaseProfiles>ossrh</maven.release.plugin.releaseProfiles>
+        <maven.release.plugin.pushChanges>true</maven.release.plugin.pushChanges>
 
         <!-- Checkstyle plugin config -->
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -89,11 +90,10 @@
         <maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
         <nexus.staging.plugin.version>1.6.8</nexus.staging.plugin.version>
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
-        <maven.release.plugin.pushChanges>true</maven.release.plugin.pushChanges>
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/malkomich/java-parent-pom.git</connection>
+        <connection>scm:git:git@github.com:malkomich/java-parent-pom.git</connection>
         <developerConnection>scm:git:git@github.com:malkomich/java-parent-pom.git</developerConnection>
         <url>https://github.com/malkomich/java-parent-pom</url>
         <tag>staging</tag>
