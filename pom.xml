@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -13,9 +13,9 @@
 
     <developers>
         <developer>
+            <id>malkomich</id>
             <name>Juan Carlos González Cabrero</name>
             <email>malkomich@gmail.com</email>
-            <id>malkomich</id>
         </developer>
     </developers>
 
@@ -96,7 +96,7 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:malkomich/${project.artifactId}.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/malkomich/${project.artifactId}.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -455,6 +455,9 @@
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <tagNameFormat>${maven.release.plugin.tagNameFormat}</tagNameFormat>
                     <releaseProfiles>${maven.release.plugin.releaseProfiles}</releaseProfiles>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>pom.xml</checkModificationExclude>
+                    </checkModificationExcludes>
                 </configuration>
             </plugin>
 
