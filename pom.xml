@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -89,6 +89,7 @@
         <maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
         <nexus.staging.plugin.version>1.6.8</nexus.staging.plugin.version>
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+        <maven.release.plugin.pushChanges>true</maven.release.plugin.pushChanges>
     </properties>
 
     <scm>
@@ -420,7 +421,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <localCheckout>true</localCheckout>
-                    <pushChanges>false</pushChanges>
+                    <pushChanges>${maven.release.plugin.pushChanges}</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <tagNameFormat>${maven.release.plugin.tagNameFormat}</tagNameFormat>
                     <releaseProfiles>${maven.release.plugin.releaseProfiles}</releaseProfiles>
