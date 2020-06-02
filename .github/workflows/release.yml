@@ -53,6 +53,7 @@ jobs:
             clean \
             release:clean \
             release:prepare
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
