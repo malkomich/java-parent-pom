@@ -38,5 +38,6 @@ jobs:
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
           git tag -f -a v$VERSION -m "Snapshot version ${VERSION}"
+          git push origin --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
