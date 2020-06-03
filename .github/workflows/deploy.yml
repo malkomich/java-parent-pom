@@ -35,4 +35,8 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
 
       - name: Create Snapshot tag
-        run: mvn scm:tag
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version)
+          git tag -f -a v$VERSION -m "Snapshot version ${VERSION}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

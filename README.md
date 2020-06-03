@@ -254,6 +254,10 @@ The steps to execute a release with this plugins are:
 Plugin to manage your pom.xml versions, including the current artifact versions,
 parent or dependencies/plugins versions, and even the tag for the SCM configuration.
 
+- [maven-help-plugin](https://maven.apache.org/plugins/maven-help-plugin/)
+
+Plugin to get relative information about the project configuration.
+
 
 ## [Maven Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
 
