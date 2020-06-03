@@ -414,7 +414,6 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <configuration>
                     <skip>${maven.gpg.plugin.skip}</skip>
-                    <executable>gpg2</executable>
                     <useAgent>true</useAgent>
                     <gpgArguments>
                         <arg>--pinentry-mode</arg>
