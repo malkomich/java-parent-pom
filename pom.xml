@@ -96,7 +96,7 @@
     <scm>
         <developerConnection>scm:git:https://github.com/malkomich/${project.artifactId}.git</developerConnection>
         <url>https://github.com/malkomich/${project.artifactId}</url>
-        <tag>refs/heads/staging</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>

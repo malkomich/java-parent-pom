@@ -40,11 +40,6 @@ jobs:
           git config author.email "noreply@github.com"
           git config author.name "Github"
 
-      - name: Update SCM tag reference
-        run: |
-          mvn versions:set-scm-tag -DnewTag=${GITHUB_REF}
-          mvn versions:commit
-
       - name: Prepare for release
         run: |
           mvn -B -ntp \

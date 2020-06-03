@@ -1,6 +1,7 @@
 [![Maven Verify](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Verify/badge.svg?branch=master)](https://github.com/malkomich/java-parent-pom/actions?query=workflow%3A%22Maven+Verify%22)
 [![Maven Deploy](https://github.com/malkomich/java-parent-pom/workflows/Maven%20Deploy/badge.svg?branch=master)](https://github.com/malkomich/java-parent-pom/actions?query=workflow%3A%22Maven+Deploy%22)
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.github.malkomich/java-parent-pom?label=RELEASE&nexusVersion=2&server=https%3A%2F%2Foss.sonatype.org&style=plastic&color=informational&logo=java&logoColor=critical)
+[![Maven Release](https://github.com/malkomich/java-parent-pom/workflows/Release/badge.svg)](https://github.com/malkomich/java-parent-pom/actions?query=workflow%3ARelease)
+[![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.github.malkomich/java-parent-pom?label=RELEASE&nexusVersion=2&server=https%3A%2F%2Foss.sonatype.org&color=informational&logo=java&logoColor=critical)](https://repo1.maven.org/maven2/com/github/malkomich/java-parent-pom/)
 
 # Java Parent POM
 
