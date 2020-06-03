@@ -4,7 +4,7 @@
 
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Java Build Configurator</name>
@@ -97,7 +97,7 @@
     <scm>
         <developerConnection>scm:git:https://github.com/malkomich/${project.artifactId}.git</developerConnection>
         <url>https://github.com/malkomich/${project.artifactId}</url>
-        <tag>v0.0.7</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
