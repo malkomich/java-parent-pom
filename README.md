@@ -88,6 +88,11 @@ Plugin to clean build files.
 - [maven-scm-plugin](https://maven.apache.org/scm/maven-scm-plugin/)
 
 Plugin to validate SCM configuration.
+```xml
+<properties>
+    <maven.scm.plugin.pushChanges>true</maven.scm.plugin.pushChanges>
+</properties>
+```
 
 - [maven-compiler-plugin](https://maven.apache.org/plugins/maven-compiler-plugin/)
 

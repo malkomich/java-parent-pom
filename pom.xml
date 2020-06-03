@@ -57,6 +57,9 @@
         <jacoco.plugin.bundle.method.coveredratio>0%</jacoco.plugin.bundle.method.coveredratio>
         <jacoco.plugin.bundle.class.missedCount>0</jacoco.plugin.bundle.class.missedCount>
 
+        <!-- SCM plugin config -->
+        <maven.scm.plugin.pushChanges>true</maven.scm.plugin.pushChanges>
+
         <!-- Sonar config -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -230,6 +233,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <configuration>
                     <connectionType>developerConnection</connectionType>
+                    <pushChanges>${maven.scm.plugin.pushChanges}</pushChanges>
                 </configuration>
                 <executions>
                     <execution>
