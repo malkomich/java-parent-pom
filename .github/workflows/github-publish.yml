@@ -1,18 +1,20 @@
 name: Publish release on Github
 
 on:
-  create:
-    tags:
-      - v*
+  release:
+    types:
+      - created
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Create GitHub release
-        uses: Roang-zero1/github-create-release-action@master
+      - uses: actions/checkout@v2
+      - name: Set up Java for publishing to GitHub Packages
+        uses: actions/setup-java@v1
         with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-          prerelease_regex: ^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+-SNAPSHOT
+          java-version: 1.8
+      - name: Publish to GitHub Packages
+        run: mvn -B -ntp -Pgithub clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
