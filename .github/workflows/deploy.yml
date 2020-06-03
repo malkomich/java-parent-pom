@@ -28,14 +28,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Get the branch name
+        id: branch
+        uses: mdecoleman/pr-branch-name@1.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build branch snapshot version name
         id: snapshot_name
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
           SNAPSHOT_VERSION=$(cut -d - -f1 <<< $VERSION)
           SNAPSHOT_VERSION+=-
-          SNAPSHOT_VERSION+=${GITHUB_REF#refs/heads/}
+          SNAPSHOT_VERSION+=$BRANCH_NAME
           echo ::set-output name=SNAPSHOT_VERSION::$SNAPSHOT_VERSION
+        env:
+          BRANCH_NAME: ${{ steps.branch.outputs.branch }}
 
       - name: Update version name to be deployed
         run: mvn versions:set -DnewVersion=$SNAPSHOT_VERSION
