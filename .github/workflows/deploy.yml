@@ -36,7 +36,7 @@ jobs:
 
       - name: Create Snapshot tag
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
           git tag -f -a v$VERSION -m "Snapshot version ${VERSION}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
