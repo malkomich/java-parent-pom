@@ -60,11 +60,6 @@
         <!-- SCM plugin config -->
         <maven.scm.plugin.pushChanges>true</maven.scm.plugin.pushChanges>
 
-        <!-- Sonar config -->
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.language>java</sonar.language>
-
         <!-- Plugin skip config -->
         <maven.clean.plugin.skip>false</maven.clean.plugin.skip>
         <maven.scm.plugin.phase>validate</maven.scm.plugin.phase>
