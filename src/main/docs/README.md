@@ -16,9 +16,9 @@ POM parent, which define a set of plugin configuration for the build lifecycle o
 Include this parent in your Maven `pom.xml` file:
 ```xml
 <parent>
-    <groupId>com.github.malkomich</groupId>
-    <artifactId>java-parent-pom</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <groupId>%PROJECT.GROUP_ID%</groupId>
+    <artifactId>%PROJECT.ARTIFACT_ID%</artifactId>
+    <version>%PROJECT.VERSION%</version>
 </parent>
 ```
 
@@ -33,19 +33,19 @@ There are some plugins without the `skip` property, so you can disable them by d
 Default values:
 ```xml
 <properties>
-    <maven.clean.plugin.skip>false</maven.clean.plugin.skip>
-    <maven.scm.plugin.phase>validate</maven.scm.plugin.phase>
-    <maven.resources.plugin.skip>false</maven.resources.plugin.skip>
-    <maven.compiler.plugin.skip>false</maven.compiler.plugin.skip>
-    <maven.surefire.plugin.skip>false</maven.surefire.plugin.skip>
-    <maven.jar.plugin.skip>false</maven.jar.plugin.skip>
-    <maven.source.plugin.jar.phase>package</maven.source.plugin.jar.phase>
-    <maven.javadoc.plugin.skip>false</maven.javadoc.plugin.skip>
-    <maven.checkstyle.plugin.skip>false</maven.checkstyle.plugin.skip>
-    <jacoco.maven.plugin.skip>false</jacoco.maven.plugin.skip>
-    <maven.gpg.plugin.skip>true</maven.gpg.plugin.skip>
-    <maven.deploy.plugin.skip>false</maven.deploy.plugin.skip>
-    <nexus.staging.plugin.deploy.phase>none</nexus.staging.plugin.deploy.phase>
+    <maven.clean.plugin.skip>%PLUGINS.MAVEN_CLEAN.SKIP%</maven.clean.plugin.skip>
+    <maven.scm.plugin.phase>%PLUGINS.MAVEN_SCM.PHASE%</maven.scm.plugin.phase>
+    <maven.resources.plugin.skip>%PLUGINS.MAVEN_RESOURCES.SKIP%</maven.resources.plugin.skip>
+    <maven.compiler.plugin.skip>%PLUGINS.MAVEN_COMPILER.SKIP%</maven.compiler.plugin.skip>
+    <maven.surefire.plugin.skip>%PLUGINS.MAVEN_SUREFIRE.SKIP%</maven.surefire.plugin.skip>
+    <maven.jar.plugin.skip>%PLUGINS.MAVEN_JAR.SKIP%</maven.jar.plugin.skip>
+    <maven.source.plugin.jar.phase>%PLUGINS.MAVEN_SOURCE.PHASE%</maven.source.plugin.jar.phase>
+    <maven.javadoc.plugin.skip>%PLUGINS.MAVEN_JAVADOC.SKIP%</maven.javadoc.plugin.skip>
+    <maven.checkstyle.plugin.skip>%PLUGINS.MAVEN_CHECKSTYLE.SKIP%</maven.checkstyle.plugin.skip>
+    <jacoco.maven.plugin.skip>%PLUGINS.JACOCO.SKIP%</jacoco.maven.plugin.skip>
+    <maven.gpg.plugin.skip>%PLUGINS.MAVEN_GPG.SKIP%</maven.gpg.plugin.skip>
+    <maven.deploy.plugin.skip>%PLUGINS.MAVEN_DEPLOY.SKIP%</maven.deploy.plugin.skip>
+    <nexus.staging.plugin.deploy.phase>%PLUGINS.NEXUS_STAGING.PHASE%</nexus.staging.plugin.deploy.phase>
 </properties>
 ```
 You can also disable some plugins, and enable them just for specific profiles, for example:
