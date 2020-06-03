@@ -35,10 +35,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config committer.email "noreply@github.com"
-          git config committer.name "Github"
-          git config author.email "noreply@github.com"
-          git config author.name "Github"
+          git config user.email "noreply@github.com"
+          git config user.name "Github"
 
       - name: Prepare for release
         run: |

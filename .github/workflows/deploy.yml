@@ -34,10 +34,13 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
 
+      - name: Configure Git
+        run: |
+          git config user.email "noreply@github.com"
+          git config user.name "Github"
+
       - name: Create Snapshot tag
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
           git tag -f -a v$VERSION -m "Snapshot version ${VERSION}"
           git push origin --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
