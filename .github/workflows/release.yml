@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - staging
+      - master
 
 jobs:
   release:
@@ -37,6 +37,11 @@ jobs:
         run: |
           git config user.email "noreply@github.com"
           git config user.name "Github"
+
+      - name: Update README.md with next version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q | cut -d - -f1)
+          mvn replacer:replace
 
       - name: Prepare for release
         run: |

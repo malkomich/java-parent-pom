@@ -1,10 +1,9 @@
 name: Maven Verify
 
 on:
-  pull_request:
-    branches:
+  push:
+    branches-ignore:
       - master
-      - staging
 
 jobs:
   verify:
