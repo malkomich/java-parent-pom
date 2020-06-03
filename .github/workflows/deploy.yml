@@ -39,8 +39,8 @@ jobs:
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
           SNAPSHOT_VERSION=$(cut -d - -f1 <<< $VERSION)
-          SNAPSHOT_VERSION+=-
-          SNAPSHOT_VERSION+=$BRANCH_NAME
+          SNAPSHOT_VERSION+=-$BRANCH_NAME
+          SNAPSHOT_VERSION+=-$(cut -d - -f2 <<< $VERSION)
           echo ::set-output name=SNAPSHOT_VERSION::$SNAPSHOT_VERSION
         env:
           BRANCH_NAME: ${{ steps.branch.outputs.branch }}
@@ -51,7 +51,8 @@ jobs:
           SNAPSHOT_VERSION: ${{ steps.snapshot_name.outputs.SNAPSHOT_VERSION }}
 
       - name: Deploy to the Maven Central Repository
-        run: mvn -B -ntp -Possrh clean deploy
+        run: |
+          mvn -B -ntp -Possrh clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
