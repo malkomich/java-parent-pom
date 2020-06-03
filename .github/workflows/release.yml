@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - staging
+      - master
 
 jobs:
   release:
@@ -43,7 +43,11 @@ jobs:
           mvn -B -ntp \
             -Dusername=$GITHUB_ACTOR \
             -Dpassword=$GITHUB_TOKEN \
+            -DpreparationGoals=replacer:replace \
             release:prepare
+
+      - name: Update README.md
+        run: git commit -m "[maven-release] update README.md"
 
       - name: Publish to the Maven Central Repository
         run: |
@@ -54,3 +58,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+
+      - name: Push release changes
+        run: git push && git push --tags

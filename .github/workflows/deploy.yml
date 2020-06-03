@@ -1,7 +1,7 @@
 name: Deploy snapshot
 
 on:
-  push:
+  pull_request:
     branches:
       - master
 
@@ -28,6 +28,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Build branch snapshot version name
+        id: snapshot_name
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
+          SNAPSHOT_VERSION=$(cut -d - -f1 <<< $VERSION)
+          SNAPSHOT_VERSION+=-
+          SNAPSHOT_VERSION+=${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SNAPSHOT_VERSION::$SNAPSHOT_VERSION
+
+      - name: Update version name to be deployed
+        run: mvn versions:set -DnewVersion=$SNAPSHOT_VERSION
+        env:
+          SNAPSHOT_VERSION: ${{ steps.snapshot_name.outputs.SNAPSHOT_VERSION }}
+
       - name: Deploy to the Maven Central Repository
         run: mvn -B -ntp -Possrh clean deploy
         env:
@@ -41,6 +55,7 @@ jobs:
 
       - name: Create Snapshot tag
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q)
-          git tag -f -a v$VERSION -m "Snapshot version ${VERSION}"
+          git tag -f -a v$SNAPSHOT_VERSION -m "Snapshot version ${SNAPSHOT_VERSION}"
           git push -f --tags
+        env:
+          SNAPSHOT_VERSION: ${{ steps.snapshot_name.outputs.SNAPSHOT_VERSION }}

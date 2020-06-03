@@ -38,7 +38,7 @@
         <!-- Release plugin config -->
         <maven.release.plugin.tagNameFormat>v@{project.version}</maven.release.plugin.tagNameFormat>
         <maven.release.plugin.releaseProfiles>ossrh</maven.release.plugin.releaseProfiles>
-        <maven.release.plugin.pushChanges>true</maven.release.plugin.pushChanges>
+        <maven.release.plugin.pushChanges>false</maven.release.plugin.pushChanges>
 
         <!-- Checkstyle plugin config -->
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -492,14 +492,6 @@
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
                 <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <ignoreMissingFile>false</ignoreMissingFile>
                     <basedir>${project.basedir}</basedir>
