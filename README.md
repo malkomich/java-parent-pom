@@ -91,7 +91,7 @@ Plugin to clean build files.
 Plugin to validate SCM configuration.
 ```xml
 <properties>
-    <maven.scm.plugin.pushChanges>false</maven.scm.plugin.pushChanges>
+    <maven.scm.plugin.pushChanges>true</maven.scm.plugin.pushChanges>
 </properties>
 ```
 
