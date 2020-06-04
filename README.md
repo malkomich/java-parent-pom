@@ -18,7 +18,7 @@ Include this parent in your Maven `pom.xml` file:
 <parent>
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.8</version>
 </parent>
 ```
 
@@ -91,7 +91,7 @@ Plugin to clean build files.
 Plugin to validate SCM configuration.
 ```xml
 <properties>
-    <maven.scm.plugin.pushChanges>true</maven.scm.plugin.pushChanges>
+    <maven.scm.plugin.pushChanges>false</maven.scm.plugin.pushChanges>
 </properties>
 ```
 
