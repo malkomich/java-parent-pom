@@ -47,7 +47,9 @@ jobs:
             release:prepare
 
       - name: Update README.md
-        run: git commit -m "[maven-release] update README.md"
+        run: |
+          git add README.md
+          git commit -m "[maven-release] update README.md"
 
       - name: Publish to the Maven Central Repository
         run: |
