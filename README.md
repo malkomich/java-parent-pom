@@ -18,7 +18,7 @@ Include this parent in your Maven `pom.xml` file:
 <parent>
     <groupId>com.github.malkomich</groupId>
     <artifactId>java-parent-pom</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
 </parent>
 ```
 
