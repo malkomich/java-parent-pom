@@ -62,4 +62,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
 
       - name: Push release changes
-        run: git push && git push --tags
+        run: |
+          git fetch
+          git push
+          git push --tags
